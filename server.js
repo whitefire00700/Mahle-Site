@@ -73,7 +73,7 @@ router.route('/adduser')
             res.json({ message: 'User created!' });
         });
 
-    });
+    }); //end of add user Api
 
 
 // REGISTER OUR ROUTES -------------------------------
