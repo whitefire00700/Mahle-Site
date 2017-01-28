@@ -39,7 +39,7 @@ var user = new User();
 var defect = new defects();
 var defectst =new defectsubtype();
 var linems= new lineMaster();
-var linetype = new lineType();
+var linetms = new lineType();
 var part = new Part();
 var rwk = new rework();
 
@@ -242,7 +242,7 @@ router.post('/linemaster/addline',function(req, res) {
 router.put('/linemaster/editline/:linems_id',function(req, res) {
 
     // use our User model to find the User we want
-    lineMaster.findById(req.params.linems_id, function (err,defectst ) {
+    lineMaster.findById(req.params.linems_id, function (err,linems ) {
 
         if (err)
             res.send(err);
@@ -259,9 +259,9 @@ router.put('/linemaster/editline/:linems_id',function(req, res) {
 
     });
 
-}); //End of Edit line master
+}); //End of linemaster
 
-//Delete line master
+//Delete defect Subtype
 
 router.delete('/linemaster/deleteline/:linems_id',function(req, res) {
     lineMaster.remove({
@@ -273,6 +273,58 @@ router.delete('/linemaster/deleteline/:linems_id',function(req, res) {
         res.json({ message: 'Line successfully deleted' });
     });
 }); //End of Delete line master
+
+
+//Start of linetypemaster
+
+router.post('/linetypemaster/addlinetype',function(req, res) {
+    linetms.linetypeno = req.body.linetypeno;  // set the User ID name (comes from the request)
+    linetms.linetypename = req.body.linetypename;
+    // save the user and check for errors
+    linetms.save(function(err) {
+        if (err)
+            res.send(err);
+        res.json({ message: 'Line type Master added!' });
+    });
+}); //end of create line type master
+
+
+//Start of Update/Edit linetypemaster
+router.put('/linetypemaster/editlinetype/:linetms_id',function(req, res) {
+
+    // use our User model to find the User we want
+    lineType.findById(req.params.linetms_id, function (err,linetms) {
+
+        if (err)
+            res.send(err);
+        linetms.linetypeno = req.body.linetypeno;  // set the User ID name (comes from the request)
+        linetms.linetypename = req.body.linetypename;
+
+        // save the user
+        linetms.save(function (err) {
+            if (err)
+                res.send(err);
+
+            res.json({message: 'Line Type successfully edited!'});
+        });
+
+    });
+
+}); //End of update linemaster
+
+//Delete linemaster Subtype
+
+router.delete('/linetypemaster/deletelinetype/:linetms_id',function(req, res) {
+    lineType.remove({
+        _id: req.params.linetms_id
+    }, function(err, linetms) {
+        if (err)
+            res.send(err);
+
+        res.json({ message: 'Line type successfully deleted' });
+    });
+}); //End of Delete line master
+
 
 
 
