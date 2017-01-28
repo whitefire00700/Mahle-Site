@@ -6,6 +6,7 @@
 //Models
 var User = require('./public/models/user');
 var defects = require('./public/models/Defects');
+var defectsubtype = require('./public/models/defectsubtype');
 var lineMaster = require('./public/models/LineMaster');
 var lineType = require('./public/models/Linetype');
 var Part = require('./public/models/Part');
@@ -36,6 +37,7 @@ var port = process.env.PORT || 8080;        // set our port
 
 var user = new User();
 var defect = new defects();
+var defectst =new defectsubtype();
 var linemaster= new lineMaster();
 var linetype = new lineType();
 var part = new Part();
@@ -121,6 +123,105 @@ router.delete('/user/deleteuser/:user_id',function(req, res) {
     });
 });
 
+// Start of Create Defect Api
+
+router.post('/defect/adddefect',function(req, res) {
+    defect.code = req.body.code;  // set the Defect ID number (comes from the request)
+    defect.description = req.body.description;
+    // save the user and check for errors
+    defect.save(function (err) {
+        if (err)
+            res.send(err);
+        res.json({message: 'Defect Added'});
+    });
+}); //End of Create Defect Api
+
+//Start of Edit/Update defect api
+router.put('/defect/editdefect/:defect_id',function(req, res) {
+
+    // use our User model to find the User we want
+    defects.findById(req.params.defect_id, function (err,defect ) {
+
+        if (err)
+            res.send(err);
+        defect.code = req.body.code;  // update the User's info
+        defect.description = req.body.description;
+
+        // save the user
+        defect.save(function (err) {
+            if (err)
+                res.send(err);
+
+            res.json({message: 'Defect edited!'});
+        });
+
+    });
+
+});
+
+//Start of remove defect api
+
+router.delete('/defect/deletedefect/:defect_id',function(req, res) {
+    defects.remove({
+        _id: req.params.defect_id
+    }, function(err, defect) {
+        if (err)
+            res.send(err);
+
+        res.json({ message: 'Defect successfully deleted' });
+    });
+}); //End of Delete Defect.
+
+//Start of create defect sub type
+
+router.post('/defectsubtype/adddefect',function(req, res) {
+    defectst.subtypeno = req.body.subtypeno;  // set the Defect ID number (comes from the request)
+    defectst.subtypename = req.body.subtypename;
+    // save the user and check for errors
+    defectst.save(function (err) {
+        if (err)
+            res.send(err);
+        res.json({message: 'Defect Subtype Added'});
+    });
+}); //End of Create Defect sub type  Api
+
+
+//Start of Update/Edit Defect Subtype
+router.put('/defectsubtype/editdefect/:defectst_id',function(req, res) {
+
+    // use our User model to find the User we want
+    defectsubtype.findById(req.params.defectst_id, function (err,defectst ) {
+
+        if (err)
+            res.send(err);
+        defectst.subtypeno = req.body.subtypeno;  // update the User's info
+        defectst.subtypename = req.body.subtypename;
+
+        // save the user
+        defectst.save(function (err) {
+            if (err)
+                res.send(err);
+
+            res.json({message: 'Defect Subtype edited!'});
+        });
+
+    });
+
+}); //End of Edit Defect Subtype
+
+
+//Delete defect Subtype
+
+router.delete('/defectsubtype/deletedefect/:defectst_id',function(req, res) {
+    defectsubtype.remove({
+        _id: req.params.defectst_id
+    }, function(err, defectst) {
+        if (err)
+            res.send(err);
+
+        res.json({ message: 'Defect SubType successfully deleted' });
+    });
+}); //End of Delete Defect Subtype
 
 
 
