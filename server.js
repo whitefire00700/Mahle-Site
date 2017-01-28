@@ -38,7 +38,7 @@ var port = process.env.PORT || 8080;        // set our port
 var user = new User();
 var defect = new defects();
 var defectst =new defectsubtype();
-var linemaster= new lineMaster();
+var linems= new lineMaster();
 var linetype = new lineType();
 var part = new Part();
 var rwk = new rework();
@@ -222,6 +222,58 @@ router.delete('/defectsubtype/deletedefect/:defectst_id',function(req, res) {
         res.json({ message: 'Defect SubType successfully deleted' });
     });
 }); //End of Delete Defect Subtype
+
+//Line master API
+
+// Create Line master
+
+router.post('/linemaster/addline',function(req, res) {
+    linems.lineno = req.body.lineno;  // set the User ID name (comes from the request)
+    linems.linename = req.body.linename;
+    // save the user and check for errors
+    linems.save(function(err) {
+        if (err)
+            res.send(err);
+        res.json({ message: 'Line Master added!' });
+    });
+}); //end create line master
+
+//Start of Update/Edit Defect Subtype
+router.put('/linemaster/editline/:linems_id',function(req, res) {
+
+    // use our User model to find the User we want
+    lineMaster.findById(req.params.linems_id, function (err,defectst ) {
+
+        if (err)
+            res.send(err);
+        linems.lineno = req.body.lineno;  // set the User ID name (comes from the request)
+        linems.linename = req.body.linename;
+
+        // save the user
+        linems.save(function (err) {
+            if (err)
+                res.send(err);
+
+            res.json({message: 'Line Type successfully edited!'});
+        });
+
+    });
+
+}); //End of Edit line master
+
+//Delete line master
+
+router.delete('/linemaster/deleteline/:linems_id',function(req, res) {
+    lineMaster.remove({
+        _id: req.params.linems_id
+    }, function(err, linems) {
+        if (err)
+            res.send(err);
+
+        res.json({ message: 'Line successfully deleted' });
+    });
+}); //End of Delete line master
+
 
 
 
