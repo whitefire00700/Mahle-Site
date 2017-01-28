@@ -4,9 +4,7 @@ var Schema = mongoose.Schema;
 var defectSchema;
 defectSchema = new Schema({
    code:String,
-    description:String,
-    subtypeno:String,
-    subtypename:String
+    description:String
 }, {collection: 'defects', versionKey: false});
 
 

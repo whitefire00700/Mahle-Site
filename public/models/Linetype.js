@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var lineTypeSchema;
 lineTypeSchema = new Schema({
         linetypeno: String,//Line type number in Line type master
-        linetype: String   //Line type in line type master
+        linetypename:String   //Line type in line type master
 
 }, {collection: 'linetype', versionKey: false});
 

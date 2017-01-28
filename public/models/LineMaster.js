@@ -3,10 +3,8 @@ var Schema = mongoose.Schema;
 
 var lineMasterSchema;
 lineMasterSchema = new Schema({
-    Line: {
-        lineno: Number,//Line master number
-        linename:String //Line master name
-    }
+    lineno: String,//Line master number
+    linename:String //Line master name
 
 }, {collection: 'line', versionKey: false});
 

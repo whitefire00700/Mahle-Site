@@ -6,7 +6,7 @@ reworkSchema = new Schema({
        bypart:String, //classification by part
        bydefect:String, //by defect
        SLA: Number,
-       remarks: String,//Rework remarks
+       remark: String,//Rework remarks
        comment1: String,//Rework analysis 1
        comment2: String,//Rework analysis 2
        Status:String // Rework Status

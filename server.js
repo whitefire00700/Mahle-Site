@@ -326,9 +326,126 @@ router.delete('/linetypemaster/deletelinetype/:linetms_id',function(req, res) {
 }); //End of Delete line master
 
 
+//Part master
+
+// Adding a part
 
 
+router.post('/part/addpart',function(req, res) {
+    part.partno = req.body.partno;  // set the User ID name (comes from the request)
+    part.partname = req.body.partname;
+    part.partlineno = req.body.partlineno;
+    part.parttraceno= req.body.parttraceno;
+    // save the user and check for errors
+    part.save(function(err) {
+        if (err)
+            res.send(err);
+        res.json({ message: 'Part added!' });
+    });
+}); //end of create part
 
+
+//Start of Update/Edit part
+router.put('/part/editpart/:part_id',function(req, res) {
+
+    // use our User model to find the User we want
+    Part.findById(req.params.part_id, function (err,part) {
+
+        if (err)
+            res.send(err);
+        part.partno = req.body.partno;  // set the User ID name (comes from the request)
+        part.partname = req.body.partname;
+        part.partlineno = req.body.partlineno;
+        part.parttraceno= req.body.parttraceno;
+
+        // save the user
+        part.save(function (err) {
+            if (err)
+                res.send(err);
+
+            res.json({message: 'part details edited!'});
+        });
+
+    });
+
+}); //End of update part master
+
+//Delete part master
+
+router.delete('/part/deletepart/:part_id',function(req, res) {
+    Part.remove({
+        _id: req.params.part_id
+    }, function(err, part) {
+        if (err)
+            res.send(err);
+
+        res.json({ message: 'Part successfully deleted' });
+    });
+}); //End of Delete part master
+
+
+//Rework master
+
+// Add Rework summary
+
+router.post('/rework/addrework',function(req, res) {
+    rwk.bypart = req.body.bypart;  // set the User ID name (comes from the request)
+    rwk.bydefect = req.body.bydefect;
+     rwk,SLA = req.body.SLA;
+    rwk.remark= req.body.remark;
+     rwk.comment1=req.body.comment1;
+     rwk.comment2=req.body.comment2;
+    rwk.Status=req.body.Status;
+    // save the user and check for errors
+    rwk.save(function(err) {
+        if (err)
+            res.send(err);
+        res.json({ message: 'Rework summary added!' });
+    });
+}); //end of rework part
+
+
+//Start of Update/Edit rework
+router.put('/rework/editrework/:rwk_id',function(req, res) {
+
+    // use our User model to find the User we want
+    rework.findById(req.params.rwk_id, function (err,rwk) {
+
+        if (err)
+            res.send(err);
+        rwk.bypart = req.body.bypart;  // set the User ID name (comes from the request)
+        rwk.bydefect = req.body.bydefect;
+        rwk,SLA = req.body.SLA;
+        rwk.remark= req.body.remark;
+        rwk.comment1=req.body.comment1;
+        rwk.comment2=req.body.comment2;
+        rwk.Status=req.body.Status;
+
+        // save the user
+        rwk.save(function (err) {
+            if (err)
+                res.send(err);
+
+            res.json({message: 'Rework Summary edited!'});
+        });
+
+    });
+
+}); //End of update part master
+
+//Delete part master
+
+router.delete('/rework/deleterework/:rwk_id',function(req, res) {
+    rework.remove({
+        _id: req.params.rwk_id
+    }, function(err, rwk) {
+        if (err)
+            res.send(err);
+
+        res.json({ message: 'Rework summary successfully deleted' });
+    });
+}); //End of Delete rework master
+//COMPLETED ALL BASIC ACTIONS
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
